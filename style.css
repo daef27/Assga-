@@ -500,4 +500,106 @@ h2::after {
 .mensagem {
   margin-top: 15px;
   font-weight: bold;
+
+}
+
+/* ================= PADRÃO NOTEBOOK ================= */
+
+.slider img {
+  height: 600px;
+}
+
+.historia-texto {
+  width: 70%;
+}
+
+.noticias {
+  width: 80%;
+}
+
+.card {
+  width: 280px;
+} 
+
+/* ================= RESPONSIVO CELULAR ================= */
+
+@media (max-width: 768px) {
+
+  /* HEADER */
+  header {
+    padding: 15px 20px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  /* MENU */
+  .menu {
+    flex-direction: column;
+    background: #003366;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 220px;
+    display: none;
+    padding: 20px;
+    border-radius: 0 0 10px 10px;
+  }
+
+  .menu.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  /* SLIDER */
+  .slider img {
+    height: 250px;
+  }
+
+  /* NOTÍCIAS */
+  .noticia-item {
+    flex-direction: column;
+  }
+
+  .noticia-item img {
+    width: 100%;
+  }
+
+  .noticias {
+    width: 95%;
+  }
+
+  /* HISTÓRIA */
+  .historia-texto {
+    width: 90%;
+  }
+
+  .historia-texto p {
+    font-size: 16px;
+  }
+
+  .capa-texto {
+    font-size: 28px;
+  }
+
+  /* RESPONSÁVEIS */
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 90%;
+  }
+
+  /* LOGIN */
+  .login-box {
+    width: 90%;
+    padding: 25px;
+  }
+
 }
