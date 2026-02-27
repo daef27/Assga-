@@ -1,45 +1,144 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>Carteira do Cliente</title>
-<link rel="stylesheet" href="carteira.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-</head>
-<body>
+'  <!DOCTYPE html>
+  <html lang="pt-br">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carteira do Cliente - ASSGA</title>
 
-<h1>Carteira do Cliente</h1>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-<div class="carteira" id="carteira">
+  <style>
+  *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+  }
 
-  <img id="foto">
-  <h2 id="nome"></h2>
-  <p><strong>CPF:</strong> <span id="cpf"></span></p>
-  <p><strong>RG:</strong> <span id="rg"></span></p>
-  <p><strong>Sócio:</strong> <span id="socio"></span></p>
+  body{
+    background: linear-gradient(135deg,#003366,#0055aa);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+  }
 
-</div>
+  h1{
+    color:white;
+    margin-bottom:20px;
+  }
 
-<button onclick="gerarPDF()">Gerar PDF</button>
+  .carteira{
+    width:350px;
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.3);
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
 
-<script>
-const usuario = JSON.parse(localStorage.getItem("clienteLogado"));
+  .carteira::before{
+    content:"ASSGA";
+    position:absolute;
+    top:-20px;
+    right:-20px;
+    font-size:80px;
+    color:rgba(0,51,102,0.05);
+    font-weight:bold;
+    transform:rotate(25deg);
+  }
 
-if(!usuario){
-  window.location.href = "login.html";
-}
+  .carteira img{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #003366;
+    margin-bottom:15px;
+  }
 
-document.getElementById("foto").src = usuario.foto;
-document.getElementById("nome").innerText = usuario.nome;
-document.getElementById("cpf").innerText = usuario.cpf;
-document.getElementById("rg").innerText = usuario.rg;
-document.getElementById("socio").innerText = usuario.socio;
+  .carteira h2{
+    color:#003366;
+    margin-bottom:10px;
+  }
 
-function gerarPDF(){
-  const elemento = document.getElementById("carteira");
-  html2pdf().from(elemento).save("carteira.pdf");
-}
-</script>
+  .carteira p{
+    margin:5px 0;
+    font-size:14px;
+  }
 
-</body>
-</html>
+  button{
+    margin-top:20px;
+    padding:12px 25px;
+    border:none;
+    border-radius:8px;
+    background:#003366;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+  }
+
+  button:hover{
+    background:#0055aa;
+  }
+  </style>
+
+  </head>
+  <body>
+
+  <h1>Carteira do Cliente</h1>
+
+  <div class="carteira" id="carteira">
+    <img id="foto">
+    <h2 id="nome"></h2>
+    <p><strong>CPF:</strong> <span id="cpf"></span></p>
+    <p><strong>RG:</strong> <span id="rg"></span></p>
+    <p><strong>Sócio:</strong> <span id="socio"></span></p>
+  </div>
+
+  <button onclick="gerarPDF()">Gerar PDF</button>
+
+  <script>
+
+    // 🔐 Proteção
+    if(localStorage.getItem("clienteLogado") !== "true"){
+      window.location.href = "login.html";
+    }
+
+    // ✅ Pegar usuário atual correto
+    const usuario = JSON.parse(localStorage.getItem("usuarioAtual"));
+
+    if(!usuario){
+      window.location.href = "login.html";
+    }
+
+    // 📌 Preencher dados
+    document.getElementById("foto").src = usuario.foto || "https://via.placeholder.com/120";
+    document.getElementById("nome").innerText = usuario.nome || "";
+    document.getElementById("cpf").innerText = usuario.cpf || "";
+    document.getElementById("rg").innerText = usuario.rg || "";
+    document.getElementById("socio").innerText = usuario.socio || "";
+
+    // 📄 Gerar PDF
+    function gerarPDF(){
+      const elemento = document.getElementById("carteira");
+
+      const opt = {
+        margin: 0.5,
+        filename: 'carteira_ASSGA.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 3 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(elemento).save();
+    }
+
+    </script>
+
+  </body>
+  </html>'
